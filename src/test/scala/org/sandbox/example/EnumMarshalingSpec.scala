@@ -8,14 +8,18 @@ object EnumMarshalingSpec {
     def Key: Class[_]
   }
 
-  sealed abstract class FlagX(val code: Int, val Key: Class[_] = FlagX.Key) extends Flag //with EnumEntry
+  sealed abstract class FlagX(val code: Int, buildKey: => Class[_] = FlagX.Key) extends Flag {
+    lazy val Key = buildKey
+  } //with EnumEntry
   object FlagX extends Enum[FlagX] {
     val values = findValues
     case object Off extends FlagX(0)
     case object On  extends FlagX(1)
     def Key = classOf[FlagX]
   }
-  sealed abstract class FlagY(val code: Int, val Key: Class[_] = FlagY.Key) extends Flag //with EnumEntry
+  sealed abstract class FlagY(val code: Int, buildKey: => Class[_] = FlagY.Key) extends Flag {
+    lazy val Key = buildKey
+  }//with EnumEntry
   object FlagY extends Enum[FlagY] {
     val values = findValues
     case object Disable extends FlagY(0)
